@@ -10,7 +10,8 @@ app.use(express.json());
 app.use(cors());
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/shauns_bagel_shop', {
+mongoose.connect(process.env.MONGO_URI, {
+  
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -64,13 +65,15 @@ app.get('/menu/:title', validateApiKey, async (req, res) => {
     const menu = await Menu.findOne({ title });
 
     if (!menu) {
-      return res.status(404).json({ error: 'Menu not found' });
+      return res.status(404).json({ 
+        error: 'Menu not found', 
+      });
     }
 
     res.json(menu);
   } catch (err) {
     console.error('Error fetching menu:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Internal Server Error' , details: err.message });
   }
 });
 
