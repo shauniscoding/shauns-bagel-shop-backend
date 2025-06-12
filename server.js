@@ -80,3 +80,6 @@ app.get('/menu/:title', validateApiKey, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+//setting timeout to 1 minute to accout for probable cold starts on inactive server
+server.setTimeout(60000);
