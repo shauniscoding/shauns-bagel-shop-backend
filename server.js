@@ -81,5 +81,5 @@ const server = app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
-//setting timeout to 1 minute to accout for probable cold starts on inactive server
-server.setTimeout(60000);
+//setting timeout to 3 minute to accout for probable cold starts on inactive server
+server.setTimeout(180000);
