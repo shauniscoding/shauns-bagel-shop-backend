@@ -34,7 +34,19 @@ const menuSchema = new mongoose.Schema({
   items: [itemSchema]
 });
 
+const locationSchema = new mongoose.Schema({
+  image: String,
+  city: String,
+  street: String,
+  miles: String,
+  phone: String,
+  hours: String,
+  address: String,
+  geolocation: [Number],
+})
+
 const Menu = mongoose.model('Menu', menuSchema, 'menu');
+const Location = mongoose.model('Location', locationSchema, 'locations');
 
 // API key validation middleware (pls dont hack not sure this is secure)
 const validateApiKey = (req, res, next) => {
@@ -74,6 +86,16 @@ app.get('/menu/:title', validateApiKey, async (req, res) => {
   } catch (err) {
     console.error('Error fetching menu:', err);
     res.status(500).json({ error: 'Internal Server Error' , details: err.message });
+  }
+});
+
+app.get('/locations', validateApiKey, async (req, res) => {
+  try {
+    const locations = await Location.find({});
+    res.json(locations);
+  } catch (err) {
+    console.error('Error fetching locations:', err);
+    res.status(500).json({ error: 'Internal Server Error', details: err.message });
   }
 });
 
